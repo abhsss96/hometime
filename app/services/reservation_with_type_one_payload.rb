@@ -9,11 +9,7 @@ class CreateReservation
     map_with_type_two_payload if params[:reservation_code].present?
   end
 
-  def map_with_type_one_payload
+  def map_with_type_one_payload; end
 
-  end
-
-  def type_one_payload_mapping
-
-  end
+  def type_one_payload_mapping; end
 end

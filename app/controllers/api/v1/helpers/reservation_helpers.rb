@@ -3,9 +3,9 @@ module Api
     module Helpers
       module ReservationHelpers
         extend Grape::API::Helpers
-        
+
         def convert_to_resource_params
-          p = declared(params, evaluate_given: true, include_missing: false )
+          p = declared(params, evaluate_given: true, include_missing: false)
           return parse_payload_type_one(p) if p[:code]
           return parse_payload_type_two(p[:reservation]) if p[:reservation]
         end
@@ -16,7 +16,6 @@ module Api
         end
 
         def parse_payload_type_two(p)
-
           # Format guest details hash
           if p[:guest_details]
             %w[guests adults children infants].each { |attr| p[attr] = p[:guest_details][attr] }
@@ -33,8 +32,7 @@ module Api
           end
           p
         end
-      end 
+      end
     end
   end
 end
-

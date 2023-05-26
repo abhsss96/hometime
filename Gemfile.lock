@@ -230,6 +230,8 @@ GEM
       parser (>= 3.2.1.0)
     ruby-progressbar (1.13.0)
     ruby2_keywords (0.0.5)
+    shoulda-matchers (5.3.0)
+      activesupport (>= 5.2.0)
     thor (1.2.2)
     timeout (0.3.2)
     tzinfo (2.0.6)
@@ -258,6 +260,7 @@ DEPENDENCIES
   rails (~> 7.0.4, >= 7.0.4.3)
   rspec-rails (~> 6.0.0)
   rubocop (~> 1.51)
+  shoulda-matchers (~> 5.0)
   tzinfo-data
 
 RUBY VERSION

@@ -5,10 +5,9 @@ module Api
         helpers Api::V1::Helpers::ReservationHelpers
         resources :reservations do
           desc 'Create Reservation'
-          
+
           params do
-            # type 1 payload with reservations as keddy
-            # optional :reservation, type: Hash
+            # Payload 1
             optional :reservation, type: Hash do
               requires :code, type: String
               optional :start_date, type: Date
@@ -33,8 +32,9 @@ module Api
               end
             end
 
+            # Payoad 2
             optional :reservation_code, type: String
-            
+
             given :reservation_code do
               requires :reservation_code, type: String, as: :code
               optional :start_date, type: Date
@@ -48,7 +48,7 @@ module Api
               optional :currency, type: String
               optional :payout_price, type: Float
               optional :security_price, type: Float
-              optional :total_price, type: Float 
+              optional :total_price, type: Float
               requires :guest, type: Hash, as: :guest_attributes do
                 requires :email, type: String
                 optional :first_name, type: String
@@ -57,27 +57,26 @@ module Api
               end
             end
 
-            # mutually_exclusive :reservation, :reservation_code 
-            exactly_one_of :reservation, :reservation_code 
+            exactly_one_of :reservation, :reservation_code
           end
 
           post do
             reservation = Reservation.find_by_code(permitted_params[:code])
             if reservation.blank?
-              reservation = Reservation.create(permitted_params)
+              reservation = Reservation.create!(permitted_params)
             else
               guest_params = permitted_params.delete(:guest_attributes)
-              reservation.update(permitted_params)
-              reservation.guest.update(guest_params)
+              reservation.update!(permitted_params)
+              reservation.guest.update!(guest_params)
             end
 
             present reservation
-          end 
+          end
         end
         helpers do
           def permitted_params
             @permitted_params ||= convert_to_resource_params
-          end 
+          end
         end
       end
     end

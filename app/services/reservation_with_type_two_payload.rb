@@ -1,7 +1,6 @@
 class ReservationWithTypeOnePayload
-
-  def initialize(params={})
-    @permitted_params = Hash.new
+  def initialize(_params = {})
+    @permitted_params = {}
   end
 
   def parameters
