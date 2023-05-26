@@ -53,3 +53,5 @@ group :development do
 end
 
 
+
+gem "rubocop", "~> 1.51"
