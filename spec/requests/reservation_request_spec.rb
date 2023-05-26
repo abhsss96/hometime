@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'Reservations', type: :request do
@@ -66,10 +68,10 @@ RSpec.describe 'Reservations', type: :request do
 
       context 'when reservation already present with same code.' do
         let(:guest) { FactoryBot.create(:guest) }
-        let!(:reservation_1) do 
-          FactoryBot.create(:reservation, 
+        let!(:reservation_one) do
+          FactoryBot.create(:reservation,
                             code: payload_type_one[:reservation][:code],
-                           guest: guest)
+                            guest: guest)
         end
         before { payload_type_one[:reservation][:status_type] = 'new' }
         it 'updates the reservation and guest details' do
@@ -82,22 +84,22 @@ RSpec.describe 'Reservations', type: :request do
         end
       end
     end
-    
+
     context 'with payload type two' do
-      it 'creates reservation with guest information' do
+      it 'creates reservation  with guest information' do
         post '/api/v1/reservations', params: payload_type_two
 
         expect(response.status).to eq(201)
         expect(parsed_body[:code]).to eq(payload_type_two[:reservation_code])
         expect(reservation.guest.email).to eq(payload_type_two[:guest][:email])
       end
-      
+
       context 'when reservation already present with same code.' do
         let(:guest) { FactoryBot.create(:guest) }
-        let!(:reservation_1) do 
-          FactoryBot.create(:reservation, 
+        let!(:reservation_one) do
+          FactoryBot.create(:reservation,
                             code: payload_type_two[:reservation_code],
-                           guest: guest)
+                            guest: guest)
         end
         before { payload_type_two[:status] = 'booked' }
         it 'updates the reservation and guest details' do
