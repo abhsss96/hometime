@@ -2,6 +2,8 @@ require 'rails_helper'
 
 RSpec.describe 'Reservations', type: :request do
   describe 'POST /api/v1/reservations' do
+    let(:parsed_body) { JSON.parse(response.body).with_indifferent_access }
+    let(:reservation) { Reservation.last }
     let(:payload_type_one) do
       {
         "reservation": {
@@ -53,12 +55,60 @@ RSpec.describe 'Reservations', type: :request do
       }
     end
 
-    it 'returns http success' do
-      # this will perform a GET request to the /health/index route
-      post '/api/v1/reservations', params: payload_type_2
+    context 'with payload type one' do
+      it 'creates reservation with guest information' do
+        post '/api/v1/reservations', params: payload_type_one
 
-      expect(response.status).to eq(200)
-      expect(response.body).to eq('{"status":"online"}')
+        expect(response.status).to eq(201)
+        expect(parsed_body[:code]).to eq(payload_type_one[:reservation][:code])
+        expect(reservation.guest.email).to eq(payload_type_one[:reservation][:guest_email])
+      end
+
+      context 'when reservation already present with same code.' do
+        let(:guest) { FactoryBot.create(:guest) }
+        let!(:reservation_1) do 
+          FactoryBot.create(:reservation, 
+                            code: payload_type_one[:reservation][:code],
+                           guest: guest)
+        end
+        before { payload_type_one[:reservation][:status_type] = 'new' }
+        it 'updates the reservation and guest details' do
+          post '/api/v1/reservations', params: payload_type_one
+
+          expect(response.status).to eq(201)
+          expect(parsed_body[:code]).to eq(payload_type_one[:reservation][:code])
+          expect(parsed_body[:status]).to eq('new')
+          expect(reservation.guest.email).to eq(payload_type_one[:reservation][:guest_email])
+        end
+      end
+    end
+    
+    context 'with payload type two' do
+      it 'creates reservation with guest information' do
+        post '/api/v1/reservations', params: payload_type_two
+
+        expect(response.status).to eq(201)
+        expect(parsed_body[:code]).to eq(payload_type_two[:reservation_code])
+        expect(reservation.guest.email).to eq(payload_type_two[:guest][:email])
+      end
+      
+      context 'when reservation already present with same code.' do
+        let(:guest) { FactoryBot.create(:guest) }
+        let!(:reservation_1) do 
+          FactoryBot.create(:reservation, 
+                            code: payload_type_two[:reservation_code],
+                           guest: guest)
+        end
+        before { payload_type_two[:status] = 'booked' }
+        it 'updates the reservation and guest details' do
+          post '/api/v1/reservations', params: payload_type_two
+
+          expect(response.status).to eq(201)
+          expect(parsed_body[:code]).to eq(payload_type_two[:reservation_code])
+          expect(parsed_body[:status]).to eq('booked')
+          expect(reservation.guest.email).to eq(payload_type_two[:guest][:email])
+        end
+      end
     end
   end
 end
