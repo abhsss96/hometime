@@ -11,8 +11,7 @@ module Api
         end
 
         def parse_payload_type_one(p)
-          p[:guest_attributes] = p.delete(:guest)
-          p[:guest_attributes][:phone_numbers] = [p[:guest_attributes].delete(:phone)]
+          p[:guest_attributes][:phone_numbers] = [p[:guest_attributes].delete(:phone_numbers)] if p[:guest_attributes]
           p
         end
 

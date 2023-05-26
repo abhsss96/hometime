@@ -49,11 +49,11 @@ module Api
               optional :payout_price, type: Float
               optional :security_price, type: Float
               optional :total_price, type: Float 
-              requires :guest, type: Hash do
-                 requires :email, type: String
+              requires :guest, type: Hash, as: :guest_attributes do
+                requires :email, type: String
                 optional :first_name, type: String
                 optional :last_name, type: String
-                optional :phone, type: String
+                optional :phone, type: String, as: :phone_numbers
               end
             end
 
@@ -62,14 +62,21 @@ module Api
           end
 
           post do
-            convert_to_resource_params
-            # { 'reservation' => declared(params, evaluate_given: true) }
-            # Reservation.create(code: params[:code])
+            reservation = Reservation.find_by_code(permitted_params[:code])
+            if reservation.blank?
+              reservation = Reservation.create(permitted_params)
+            else
+              guest_params = permitted_params.delete(:guest_attributes)
+              reservation.update(permitted_params)
+              reservation.guest.update(guest_params)
+            end
+
+            present reservation
           end 
         end
         helpers do
           def permitted_params
-            @permitted_params ||= declared(params, include_missing: false, evaluate_given: true)
+            @permitted_params ||= convert_to_resource_params
           end 
         end
       end
