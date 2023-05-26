@@ -1,24 +1,20 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# Hometime
 
-Things you may want to cover:
+A brief description of what this project does and who it's for
 
-* Ruby version
+Steps to setup and test the application.
 
-* System dependencies
+1) Select ruby version using ruby package manager to 3.0.0
 
-* Configuration
+2) Install dependencies
+    Run bundle install
+3) Setup the database
+    Run rails db:setup 
+4) To verify specs
+    Run rspec 
+5) Run application server with 
+    rails s -p 3000
+6) Use postman collection to import the collection and make api calls
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
