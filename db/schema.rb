@@ -33,7 +33,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_24_210512) do
     t.integer "adults", default: 0
     t.integer "children", default: 0
     t.integer "infants", default: 0
-    t.integer "status"
+    t.string "status"
     t.string "currency"
     t.integer "guest_id"
     t.float "payout_price"

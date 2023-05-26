@@ -1,8 +1,6 @@
 class Guest < ApplicationRecord
   has_many :reservations, dependent: :destroy
 
-  validate :email, presence: true, unique: true
+  validates :email, presence: true, uniqueness: true
   serialize :phone_numbers
-
-
 end

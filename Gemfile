@@ -44,7 +44,9 @@ group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
   gem 'rspec-rails', '~> 6.0.0'
   gem 'factory_bot_rails'
-
+  gem 'pry'
+  gem 'pry-byebug'
+  gem 'pry-rails'
 end
 
 group :development do
@@ -55,3 +57,9 @@ end
 
 
 gem "rubocop", "~> 1.51"
+
+gem "faker", "~> 3.2"
+
+gem "grape", "~> 1.7"
+
+gem "grape_on_rails_routes", "~> 0.3.2"

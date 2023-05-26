@@ -9,7 +9,7 @@ class CreateReservations < ActiveRecord::Migration[7.0]
       t.integer :adults, default: 0
       t.integer :children, default: 0
       t.integer :infants, default: 0
-      t.integer :status
+      t.string:status
       t.string :currency
       t.integer :guest_id
       t.float :payout_price
