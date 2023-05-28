@@ -5,9 +5,9 @@ module Api
     class Root < Grape::API
       format :json
 
-      rescue_from ActiveRecord::RecordNotFound do |_exception|
-        error!({ errors: { status: 'Not Found', message: 'Record not found' } }, 404)
-      end
+      #rescue_from ActiveRecord::RecordNotFound do |_exception|
+      #  error!({ errors: { status: 'Not Found', message: 'Record not found' } }, 404)
+      #end
 
       rescue_from ActiveRecord::RecordInvalid do |exception|
         errors = exception.record.errors
