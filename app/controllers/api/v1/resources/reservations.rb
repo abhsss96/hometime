@@ -19,14 +19,7 @@ module Api
           end
 
           post do
-            reservation = Reservation.find_by_code(reservation_params[:code])
-            if reservation.blank?
-              reservation = Reservation.create!(create_reservation_params)
-            else
-              reservation.update!(reservation_params)
-            end
-
-            present reservation
+            present create_or_update_reservation
           end
         end
       end

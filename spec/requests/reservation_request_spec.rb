@@ -106,7 +106,7 @@ RSpec.describe 'Reservations', type: :request do
 
           expect(response.status).to eq(422)
           expect(parsed_body[:errors][:status]).to eq('Unprocessable Entity')
-          expect(parsed_body[:errors][:message]).to eq("Guest email can't be blank")
+          expect(parsed_body[:errors][:message]).to eq("Email can't be blank")
         end
       end
     end
@@ -162,7 +162,7 @@ RSpec.describe 'Reservations', type: :request do
 
           expect(response.status).to eq(422)
           expect(parsed_body[:errors][:status]).to eq('Unprocessable Entity')
-          expect(parsed_body[:errors][:message]).to eq("Guest email can't be blank")
+          expect(parsed_body[:errors][:message]).to eq("Email can't be blank")
         end
       end
     end

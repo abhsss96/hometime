@@ -4,23 +4,24 @@ class PayloadTypeTwo
   def initialize(payload)
     @payload = payload
     @guest_payload = payload[:guest]
-    @params = {}
+    @reseravtion_params = {}
     @guest_params = {}
     convert
   end
 
-  def params
-    @params[:reservation][:guest_attributes] ||= guest_params
-    @params
+  def reservation
+    @reseravtion_params[:reservation] ||= {}
   end
 
   def reservation_params
-    @params[:reservation] ||= {}
+    @reseravtion_params
   end
 
-  def guest_params
-    @guest_params || {}
+  def guest
+    @guest_params[:guest] ||= {}
   end
+
+  attr_reader :guest_params
 
   private
 
@@ -30,7 +31,7 @@ class PayloadTypeTwo
   end
 
   def convert_to_reservastion_params
-    reservation_params[:code] = @payload[:reservation_code]
+    reservation[:code] = @payload[:reservation_code]
     %w[
       start_date
       end_date
@@ -44,13 +45,12 @@ class PayloadTypeTwo
       payout_price
       security_price
       total_price
-    ].each { |attr| reservation_params[attr.to_sym] = @payload[attr] }
+    ].each { |attr| reservation[attr.to_sym] = @payload[attr] }
   end
 
   def convert_to_guest_params
-    %w[email first_name last_name].each { |attr| guest_params[attr.to_sym] = @guest_payload[attr] }
+    %w[email first_name last_name].each { |attr| guest[attr.to_sym] = @guest_payload[attr] }
 
-    guest_params[:phone_numbers] = [@guest_payload[:phone]]
-    guest_params[:id] = ::Guest.find_by_email(guest_params['email'])&.id
+    guest[:phone_numbers] = [@guest_payload[:phone]]
   end
 end
