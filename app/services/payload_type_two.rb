@@ -1,12 +1,13 @@
-class PayloadTypeTwo
+# frozen_string_literal: true
 
+class PayloadTypeTwo
   def initialize(payload)
     @payload = payload
     @guest_payload = payload[:guest]
     @params = {}
     @guest_params = {}
     convert
-  end 
+  end
 
   def params
     @params[:reservation][:guest_attributes] ||= guest_params
@@ -22,28 +23,28 @@ class PayloadTypeTwo
   end
 
   private
-  
+
   def convert
     convert_to_reservastion_params
     convert_to_guest_params
   end
 
   def convert_to_reservastion_params
-    reservation_params[:code] =  @payload[:reservation_code]
+    reservation_params[:code] = @payload[:reservation_code]
     %w[
-      start_date 
-      end_date 
-      nights 
-      guests 
-      adults 
-      children 
-      infants 
-      status 
-      currency 
-      payout_price 
+      start_date
+      end_date
+      nights
+      guests
+      adults
+      children
+      infants
+      status
+      currency
+      payout_price
       security_price
       total_price
-    ].each{ |attr| reservation_params[attr.to_sym] = @payload[attr] }
+    ].each { |attr| reservation_params[attr.to_sym] = @payload[attr] }
   end
 
   def convert_to_guest_params
