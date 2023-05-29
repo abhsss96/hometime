@@ -12,7 +12,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"reservation_code\": \"YYY112345678\",\n    \"start_date\": \"2021-04-14\",\n    \"end_date\": \"2021-04-18\",\n    \"nights\": 2,\n    \"guests\": 4,\n    \"adults\": 2,\n    \"children\": 2,\n    \"infants\": 0,\n    \"status\": \"new\",\n    \"guest\": {\n        \"first_name\": \"Wayne\",\n        \"last_name\": \"Woodbridge\",\n        \"phone\": \"6391234156789\",\n        \"email\": \"wayne_wooqdbr1idge@bnb.com\"\n    },\n    \"currency\": \"AUD\",\n    \"payout_price\": \"4200.00\",\n    \"security_price\": \"500\",\n    \"total_price\": \"4700.00\"\n}",
+					"raw": "{\n    \"reservation_code\": \"Y4YY41123445612718\",\n    \"start_date\": \"2021-04-14\",\n    \"end_date\": \"2021-04-18\",\n    \"nights\": 2,\n    \"guests\": 4,\n    \"adults\": 2,\n    \"children\": 2,\n    \"infants\": 0,\n    \"status\": \"new\",\n    \"guest\": {\n        \"first_name\": \"Wayne\",\n        \"last_name\": \"Woodbridg4e\",\n        \"phone\": \"6391234156789\",\n        \"email\": \"wayne_woo3qd1br1idge1@bnb.com\"\n    },\n    \"currency\": \"AUD\",\n    \"payout_price\": \"4200.00\",\n    \"security_price\": \"500\",\n    \"total_price\": \"4700.00\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -20,15 +20,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/v1/reservations",
+					"raw": "http://localhost:3000/reservations",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "3000",
 					"path": [
-						"api",
-						"v1",
 						"reservations"
 					]
 				}
@@ -50,15 +48,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/v1/reservations",
+					"raw": "http://localhost:3000/reservations",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "3000",
 					"path": [
-						"api",
-						"v1",
 						"reservations"
 					]
 				}
