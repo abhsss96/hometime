@@ -17,4 +17,5 @@ Steps to setup and test the application.
 5) Run application server with 
     rails s -p 3000
 6) Use postman collection to import the collection and make api calls
+   Is it available inside /doc
 
