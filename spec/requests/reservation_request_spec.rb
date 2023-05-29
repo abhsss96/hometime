@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Reservations', type: :request do
-  describe 'POST /api/v1/reservations' do
+  describe 'POST /reservations' do
     let(:parsed_body) { JSON.parse(response.body).with_indifferent_access }
     let(:reservation) { Reservation.last }
     let(:payload_type_one) do
@@ -59,11 +59,11 @@ RSpec.describe 'Reservations', type: :request do
 
     context 'with payload type one' do
       it 'creates reservation with guest information' do
-        post '/api/v1/reservations', params: payload_type_one
-
+        post '/reservations', params: payload_type_one
+        
         expect(response.status).to eq(201)
         expect(parsed_body[:code]).to eq(payload_type_one[:reservation][:code])
-        expect(reservation.guest.email).to eq(payload_type_one[:reservation][:guest_email])
+        expect(parsed_body[:guest][:email]).to eq(payload_type_one[:reservation][:guest_email])
       end
 
       context 'when reservation already present with same code.' do
@@ -77,7 +77,7 @@ RSpec.describe 'Reservations', type: :request do
         before { payload_type_one[:reservation][:status_type] = 'new' }
 
         it 'updates the reservation and guest details' do
-          post '/api/v1/reservations', params: payload_type_one
+          post '/reservations', params: payload_type_one
 
           expect(response.status).to eq(201)
           expect(parsed_body[:code]).to eq(payload_type_one[:reservation][:code])
@@ -90,11 +90,10 @@ RSpec.describe 'Reservations', type: :request do
         before { payload_type_one[:reservation][:code] = nil }
 
         it 'returns 422' do
-          post '/api/v1/reservations', params: payload_type_one
+          post '/reservations', params: payload_type_one
 
           expect(response.status).to eq(422)
-          expect(parsed_body[:errors][:status]).to eq('Unprocessable Entity')
-          expect(parsed_body[:errors][:message]).to eq("Code can't be blank")
+          expect(parsed_body[:errors]).to eq("reservation or reservation_code missing.")
         end
       end
 
@@ -102,18 +101,17 @@ RSpec.describe 'Reservations', type: :request do
         before { payload_type_one[:reservation][:guest_email] = nil }
 
         it 'returns 422' do
-          post '/api/v1/reservations', params: payload_type_one
-
+          post '/reservations', params: payload_type_one
+          
           expect(response.status).to eq(422)
-          expect(parsed_body[:errors][:status]).to eq('Unprocessable Entity')
-          expect(parsed_body[:errors][:message]).to eq("Email can't be blank")
+          expect(parsed_body[:errors]).to eq("Guest email is missing.")
         end
       end
     end
 
     context 'with payload type two' do
       it 'creates reservation  with guest information' do
-        post '/api/v1/reservations', params: payload_type_two
+        post '/reservations', params: payload_type_two
 
         expect(response.status).to eq(201)
         expect(parsed_body[:code]).to eq(payload_type_two[:reservation_code])
@@ -131,7 +129,7 @@ RSpec.describe 'Reservations', type: :request do
         before { payload_type_two[:status] = 'booked' }
 
         it 'updates the reservation and guest details' do
-          post '/api/v1/reservations', params: payload_type_two
+          post '/reservations', params: payload_type_two
 
           expect(response.status).to eq(201)
           expect(parsed_body[:code]).to eq(payload_type_two[:reservation_code])
@@ -144,13 +142,10 @@ RSpec.describe 'Reservations', type: :request do
         before { payload_type_two.delete(:reservation_code) }
 
         it 'returns 422' do
-          post '/api/v1/reservations', params: payload_type_two
+          post '/reservations', params: payload_type_two
 
-          expect(response.status).to eq(400)
-
-          expect(parsed_body[:error]).to eq(
-            'reservation, reservation_code are missing, exactly one parameter must be provided'
-          )
+          expect(response.status).to eq(422)
+          expect(parsed_body[:errors]).to eq("reservation or reservation_code missing.")
         end
       end
 
@@ -158,11 +153,10 @@ RSpec.describe 'Reservations', type: :request do
         before { payload_type_two[:guest][:email] = nil }
 
         it 'returns 422' do
-          post '/api/v1/reservations', params: payload_type_two
+          post '/reservations', params: payload_type_two
 
           expect(response.status).to eq(422)
-          expect(parsed_body[:errors][:status]).to eq('Unprocessable Entity')
-          expect(parsed_body[:errors][:message]).to eq("Email can't be blank")
+          expect(parsed_body[:errors]).to eq("Email can't be blank")
         end
       end
     end

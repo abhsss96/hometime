@@ -1,11 +1,14 @@
 # frozen_string_literal: true
 
 class PayloadTypeTwo
+  attr_reader :reseravtion_params, :guest_params, :errors
+
   def initialize(payload)
     @payload = payload
     @guest_payload = payload[:guest]
     @reseravtion_params = {}
     @guest_params = {}
+    @errors = []
     convert
   end
 
@@ -20,8 +23,6 @@ class PayloadTypeTwo
   def guest
     @guest_params[:guest] ||= {}
   end
-
-  attr_reader :guest_params
 
   private
 
