@@ -46,6 +46,7 @@ group :development, :test do
   gem 'pry'
   gem 'pry-byebug'
   gem 'pry-rails'
+  gem "rubocop", "~> 1.51"
 end
 
 group :development do
@@ -59,9 +60,4 @@ group :test do
   gem "faker", "~> 3.2"
 end
 
-gem "rubocop", "~> 1.51"
 
-
-gem "grape", "~> 1.7"
-
-gem "grape_on_rails_routes", "~> 0.3.2"
