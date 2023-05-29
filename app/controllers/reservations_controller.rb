@@ -6,7 +6,7 @@ class ReservationsController < ApplicationController
     if @create_or_update_reservation.errors.blank?
       render json: @create_or_update_reservation.reservation.to_json(include: :guest), status: 201
     else
-      render json: { errors: @create_or_update_reservation.errors.flatten.uniq.join(", ") }, status: 422
+      render json: { errors: @create_or_update_reservation.errors.flatten.uniq.join(', ') }, status: 422
     end
   end
 end

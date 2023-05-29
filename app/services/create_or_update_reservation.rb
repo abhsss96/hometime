@@ -23,8 +23,8 @@ class CreateOrUpdateReservation
 
   def processed_payload_errors
     return processed_payload.errors if processed_payload
-    
-    ["reservation or reservation_code missing."]
+
+    ['reservation or reservation_code missing.']
   end
 
   def processed_payload

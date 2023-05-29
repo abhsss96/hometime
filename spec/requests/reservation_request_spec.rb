@@ -60,7 +60,7 @@ RSpec.describe 'Reservations', type: :request do
     context 'with payload type one' do
       it 'creates reservation with guest information' do
         post '/reservations', params: payload_type_one
-        
+
         expect(response.status).to eq(201)
         expect(parsed_body[:code]).to eq(payload_type_one[:reservation][:code])
         expect(parsed_body[:guest][:email]).to eq(payload_type_one[:reservation][:guest_email])
@@ -93,7 +93,7 @@ RSpec.describe 'Reservations', type: :request do
           post '/reservations', params: payload_type_one
 
           expect(response.status).to eq(422)
-          expect(parsed_body[:errors]).to eq("reservation or reservation_code missing.")
+          expect(parsed_body[:errors]).to eq('reservation or reservation_code missing.')
         end
       end
 
@@ -102,9 +102,9 @@ RSpec.describe 'Reservations', type: :request do
 
         it 'returns 422' do
           post '/reservations', params: payload_type_one
-          
+
           expect(response.status).to eq(422)
-          expect(parsed_body[:errors]).to eq("Guest email is missing.")
+          expect(parsed_body[:errors]).to eq('Guest email is missing.')
         end
       end
     end
@@ -145,7 +145,7 @@ RSpec.describe 'Reservations', type: :request do
           post '/reservations', params: payload_type_two
 
           expect(response.status).to eq(422)
-          expect(parsed_body[:errors]).to eq("reservation or reservation_code missing.")
+          expect(parsed_body[:errors]).to eq('reservation or reservation_code missing.')
         end
       end
 
